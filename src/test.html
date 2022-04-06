@@ -14,44 +14,8 @@
 
 
 
-
----
-const hardNumber가 재설정될때마다 App()이 재렌더링되고있음
-
-
-
-
-
 ---
 
-
-ㅂ) 간단한 코드인데도 계산에 1초정도 걸림
-
-App component전체가 재렌더링 되면서 hardCalculate도 실행되기때문임..
-
-
-
-
----
-
-
-🍀useMemo() hook에 ... hardCalculate()함수..넣음
-
-[ ]안의 state가 바뀔때에만, 그 안의 코드 실행함, 
-
-(hardNumber이 바뀔때에만 hardCalculate()함수호출함, )
-
-그게 아니면 hardSum값 그대로 재사용함 
-
-(App 컴포넌트가 재렌더링되어도, 그대로 사용되어서 hardCalculate()함수를 호출안하고, 속도에 좋음)
-
----
-
-
-🍀hardCalculate()함수...useMemo() hook에 넣음
-
-
-그게 아니면 hardSum값 그대로 재사용함 (App 컴포넌트가 재렌더링되어도, 그대로 사용되어서 hardCalculate()함수를 호출안하고, 속도에 좋음)
 
 
 ---

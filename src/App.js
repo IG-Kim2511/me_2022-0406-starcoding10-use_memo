@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 
 /* 🍀 js0505
@@ -24,6 +24,11 @@ const hardCalculate =(p_number)=>{
 
 /* 🍀 js0510
   const hardNumber가 재설정될때마다 App()이 재렌더링되고있음
+
+  ㅂ) 간단한 코드인데도 계산에 1초정도 걸림
+ App component전체가 재렌더링 되면서 hardCalculate도 실행되기때문임..
+
+
 */
 const easyCalculate =(p_number)=>{
 
@@ -36,12 +41,39 @@ function App() {
 
   // js0505
   const [hardNumber, sethardNumber] = useState(1)  
-  const hardSum = hardCalculate(hardNumber);
+
+  // const hardSum = hardCalculate(hardNumber);
   
+  /* 🍀 js0522
+
+    10.
+    useMemo() hook에 ... hardCalculate()함수..넣음
+
+    [ ]안의 state가 바뀔때에만, 그 안의 코드 실행함, 
+
+    (hardNumber이 바뀔때에만 hardCalculate()함수호출함, )
+
+    그게 아니면 hardSum값 그대로 재사용함 
+
+    (App 컴포넌트가 재렌더링되어도, 그대로 사용되어서 hardCalculate()함수를 호출안하고, 속도에 좋음)
+
+    20. 
+    App 컴포넌트가 재랜더링되어도, easyCalculate()함수만 실행되어서 속도가 빠른걸 확인할수있음
   
+  */
+
+    const hardSum = useMemo(() => {
+      return hardCalculate(hardNumber);
+    }, [hardNumber])
+
+
+
   // js0510
   const [easyNumber, setEDasyNumber] = useState(1)
+
   const easySum = easyCalculate(easyNumber);
+
+
 
 
   return (
