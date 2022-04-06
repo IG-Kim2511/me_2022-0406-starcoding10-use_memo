@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 
 /* 🍀 js0505
@@ -95,8 +95,133 @@ function App() {
       </section>
     
     
+      <App2/>
     </div>
   );
 }
+
+
+
+/* 🍀 js0530 준비.  
+클릭하면, 
+한국 - 외국 바뀜
+
+1. 클릭한때, isKorea  : true- false 바꿈
+
+2. isKorea 가 true ->한국
+
+ isKorea 가 false  -> 외국
+
+으로 바뀜
+
+3. location 데이터바인딩
+
+*/
+
+
+
+const App2 = () => {
+
+  // js0530
+  const [number, setNumber] = useState(0)
+
+  const [isKorea, setIsKorea] = useState(true)
+
+
+  // 
+
+  /* 🦄 js0540  Primitive data 타입 vs reference data 타입 (Object타입)
+    🍉Primitive data 타입
+
+    변수에  Privitive타입 넣으면 그대로 담김
+
+    🍉reference data 타입 (Object타입)
+
+    변수에  Object타입넣으면 , 너무커서 그대로 담지않음. 
+
+    일단 메모리안에 넣고 
+
+    변수안에 그 객체가 담긴 메모리의 주소를 넣음
+  */
+
+  /* 🍀 js0540 
+    useEffect 실행
+    첫랜더링일때,
+    []안의 state가 바뀐때에만 실행됨
+
+    🍉 10. []안의 state가  (Primitive data 타입인 string 인때...)
+        -> 정상작동
+      
+    🍉 20. []안의 state가 (reference data 타입인 object 인때...)
+
+      ->버그 :        
+        []안의 state가 바뀐때 뿐만이 아니라, 모든경우에 실행되고 있음  . 왜??
+                  
+      -> 답:
+        number변수를 바꾸어도
+
+        Object형식의 location변수가 이전의 location변수와 다른 변수이므로, 
+        useEffect는 location도 바뀌었다고 인식함.
+
+        그래서 모두 다시 재랜더링함
+
+    🍉30.
+        location변수가 초기화되는것을 막아주기
+
+        useMemo사용해서 
+        isKorea 가 바뀐때에만 적용  
+  */
+
+  // 🥒js0540-10
+  // const location = isKorea ? "Korea" : "USA"
+
+  // 🥒js0540-20
+  // const location ={
+  //   country: isKorea ? 'Korea' : 'usa',
+  // }
+
+  // 🥒js0540-30
+  const location = useMemo(() => {
+    return{
+      country: isKorea ? "Korea" : "usa",
+    }
+  }, [isKorea])
+
+
+  useEffect(() => {
+    console.log('useEffect calling')
+  }, [location])
+  
+
+  // js0540-20
+
+
+  return (
+    <div>
+      <section>
+        <h2>number</h2>
+        <input type="number" value={number} onChange={(e)=> setNumber(e.target.value)} />
+      </section>
+
+      <section>
+        <h2>where are you now?</h2>
+
+        {/* <p>country : {location}</p> */}
+
+         <p>country : {location.country}</p> 
+
+        <button onClick={()=>{setIsKorea(!isKorea)}}>button</button>
+      
+      
+      </section>
+      
+    
+    
+    
+    
+    </div>
+  )
+}
+
 
 export default App;
