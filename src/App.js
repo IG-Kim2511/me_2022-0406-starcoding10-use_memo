@@ -79,6 +79,10 @@ function App() {
   return (
     <div>
       <section>
+
+      <h1>별코딩 useMemo</h1>
+      <h1>object data type</h1>
+
         <h3> hard calculate</h3>
         
         <input type="number"  value={hardNumber} onChange={(e)=> sethardNumber(e.target.value)}/>
