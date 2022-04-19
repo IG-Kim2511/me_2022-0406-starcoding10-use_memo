@@ -210,9 +210,9 @@ const App2 = () => {
       <section>
         <h2>where are you now?</h2>
 
-        {/* <p>country : {location}</p> */}
+        {/* <h2>country : {location}</h2> */}
 
-         <p>country : {location.country}</p> 
+         <h2>country : {location.country}</h2> 
 
         <button onClick={()=>{setIsKorea(!isKorea)}}>button</button>
       
